@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model alerts {
+  id      Int      @id @default(autoincrement())
+  caja_id Int
+  fecha   DateTime @db.Date
+  mensaje String   @db.VarChar(255)
+  send    Boolean
+  box     box      @relation(fields: [caja_id], references: [id])
+
+  @@index([caja_id])
+}
+
+model box {
+  id           Int         @id @default(autoincrement())
+  tipo         String      @db.VarChar(255)
+  medidas      String      @db.VarChar(255)
+  stock        Int
+  proveedor_id Int
+  alerts       alerts[]
+  movements    movements[]
+  supplier     suppliers   @relation(fields: [proveedor_id], references: [id])
+
+  @@index([proveedor_id])
+}
+
+model movements {
+  id              Int      @id @default(autoincrement())
+  caja_id         Int
+  cantidad        Int
+  tipo_movimiento Int      // 1 = ENTRADA, 2 = SALIDA
+  fecha           DateTime @db.Date
+  usuario_id      Int
+  box             box      @relation(fields: [caja_id], references: [id])
+  user            users    @relation(fields: [usuario_id], references: [id])
+
+  @@index([caja_id])
+  @@index([usuario_id])
+}
+
+model suppliers {
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(255)
+  email    String @db.VarChar(255)
+  telefono String @db.VarChar(255)
+  boxes    box[]
+}
+
+model users {
+  id         Int         @id @default(autoincrement())
+  name       String      @db.VarChar(255)
+  email      String      @db.VarChar(255)
+  password   String      @db.VarChar(255)
+  idRol      Int         // 1 = ADMIN, 2 = USER
+  movements  movements[]
+}
