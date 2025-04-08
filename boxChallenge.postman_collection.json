@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "585bdedc-559f-450a-a7e3-9065b3874291",
+		"_postman_id": "5dec36d0-8e67-4b3b-8af1-a9bca2eea14c",
 		"name": "boxChallenge",
-		"description": "### Guía para probar la Aplicación\n\nA continuación, te proporciono ejemplos detallados para probar cada endpoint de tu aplicación. He organizado los ejemplos por entidad y tipo de operación.\n\n## 1\\. Usuarios (Users)\n\n### 1.1 Crear un Usuario (POST)\n\n**Request:**\n\n- Método: `POST`\n    \n- URL: `{{base_url}}/users`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"name\": \"Admin Usuario\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"123456\",\n  \"idRol\": 1\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Admin Usuario\",\n  \"email\": \"admin@example.com\",\n  \"idRol\": 1\n}\n\n ```\n\n### 1.2 Obtener Todos los Usuarios (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/users`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 1,\n    \"name\": \"Admin Usuario\",\n    \"email\": \"admin@example.com\",\n    \"idRol\": 1\n  }\n]\n\n ```\n\n### 1.3 Obtener un Usuario por ID (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/users/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Admin Usuario\",\n  \"email\": \"admin@example.com\",\n  \"idRol\": 1\n}\n\n ```\n\n### 1.4 Actualizar un Usuario (PATCH)\n\n**Request:**\n\n- Método: `PATCH`\n    \n- URL: `{{base_url}}/users/1`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"name\": \"Admin Actualizado\",\n  \"email\": \"admin.updated@example.com\"\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Admin Actualizado\",\n  \"email\": \"admin.updated@example.com\",\n  \"idRol\": 1\n}\n\n ```\n\n### 1.5 Eliminar un Usuario (DELETE)\n\n**Request:**\n\n- Método: `DELETE`\n    \n- URL: `{{base_url}}/users/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Admin Actualizado\",\n  \"email\": \"admin.updated@example.com\",\n  \"password\": \"[hashed password]\",\n  \"idRol\": 1\n}\n\n ```\n\n## 2\\. Proveedores (Suppliers)\n\n### 2.1 Crear un Proveedor (POST)\n\n**Request:**\n\n- Método: `POST`\n    \n- URL: `{{base_url}}/suppliers`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"name\": \"Proveedor Cajas S.A.\",\n  \"email\": \"contacto@proveedorcajas.com\",\n  \"telefono\": \"123456789\"\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Proveedor Cajas S.A.\",\n  \"email\": \"contacto@proveedorcajas.com\",\n  \"telefono\": \"123456789\"\n}\n\n ```\n\n### 2.2 Obtener Todos los Proveedores (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/suppliers`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 1,\n    \"name\": \"Proveedor Cajas S.A.\",\n    \"email\": \"contacto@proveedorcajas.com\",\n    \"telefono\": \"123456789\"\n  }\n]\n\n ```\n\n### 2.3 Obtener un Proveedor por ID (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/suppliers/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Proveedor Cajas S.A.\",\n  \"email\": \"contacto@proveedorcajas.com\",\n  \"telefono\": \"123456789\",\n  \"boxes\": []\n}\n\n ```\n\n### 2.4 Actualizar un Proveedor (PATCH)\n\n**Request:**\n\n- Método: `PATCH`\n    \n- URL: `{{base_url}}/suppliers/1`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"name\": \"Proveedor Cajas Actualizado\",\n  \"telefono\": \"987654321\"\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Proveedor Cajas Actualizado\",\n  \"email\": \"contacto@proveedorcajas.com\",\n  \"telefono\": \"987654321\"\n}\n\n ```\n\n### 2.5 Eliminar un Proveedor (DELETE)\n\n**Request:**\n\n- Método: `DELETE`\n    \n- URL: `{{base_url}}/suppliers/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Proveedor Cajas Actualizado\",\n  \"email\": \"contacto@proveedorcajas.com\",\n  \"telefono\": \"987654321\"\n}\n\n ```\n\n## 3\\. Cajas (Box)\n\n### 3.1 Crear una Caja (POST)\n\n**Request:**\n\n- Método: `POST`\n    \n- URL: `{{base_url}}/box`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"tipo\": \"Caja Estándar\",\n  \"medidas\": \"30x20x15\",\n  \"stock\": 100,\n  \"proveedor_id\": 1\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"tipo\": \"Caja Estándar\",\n  \"medidas\": \"30x20x15\",\n  \"stock\": 100,\n  \"proveedor_id\": 1\n}\n\n ```\n\n### 3.2 Obtener Todas las Cajas (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/box`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 1,\n    \"tipo\": \"Caja Estándar\",\n    \"medidas\": \"30x20x15\",\n    \"stock\": 100,\n    \"proveedor_id\": 1,\n    \"supplier\": {\n      \"id\": 1,\n      \"name\": \"Proveedor Cajas S.A.\",\n      \"email\": \"contacto@proveedorcajas.com\",\n      \"telefono\": \"123456789\"\n    }\n  }\n]\n\n ```\n\n### 3.3 Obtener una Caja por ID (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/box/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"tipo\": \"Caja Estándar\",\n  \"medidas\": \"30x20x15\",\n  \"stock\": 100,\n  \"proveedor_id\": 1,\n  \"supplier\": {\n    \"id\": 1,\n    \"name\": \"Proveedor Cajas S.A.\",\n    \"email\": \"contacto@proveedorcajas.com\",\n    \"telefono\": \"123456789\"\n  },\n  \"movements\": [],\n  \"alerts\": []\n}\n\n ```\n\n### 3.4 Actualizar una Caja (PATCH)\n\n**Request:**\n\n- Método: `PATCH`\n    \n- URL: `{{base_url}}/box/1`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"tipo\": \"Caja Premium\",\n  \"stock\": 150\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"tipo\": \"Caja Premium\",\n  \"medidas\": \"30x20x15\",\n  \"stock\": 150,\n  \"proveedor_id\": 1\n}\n\n ```\n\n### 3.5 Verificar Stock de una Caja (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/box/1/verificar-stock`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"tipo\": \"Caja Premium\",\n  \"medidas\": \"30x20x15\",\n  \"stock\": 150,\n  \"proveedor_id\": 1,\n  \"supplier\": {\n    \"id\": 1,\n    \"name\": \"Proveedor Cajas S.A.\",\n    \"email\": \"contacto@proveedorcajas.com\",\n    \"telefono\": \"123456789\"\n  },\n  \"movements\": [],\n  \"alerts\": []\n}\n\n ```\n\n### 3.6 Eliminar una Caja (DELETE)\n\n**Request:**\n\n- Método: `DELETE`\n    \n- URL: `{{base_url}}/box/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"tipo\": \"Caja Premium\",\n  \"medidas\": \"30x20x15\",\n  \"stock\": 150,\n  \"proveedor_id\": 1\n}\n\n ```\n\n## 4\\. Movimientos (Movements)\n\n### 4.1 Crear un Movimiento de Entrada (POST)\n\n**Request:**\n\n- Método: `POST`\n    \n- URL: `{{base_url}}/movements`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"caja_id\": 1,\n  \"cantidad\": 50,\n  \"tipo_movimiento\": 1,\n  \"usuario_id\": 1\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"caja_id\": 1,\n  \"cantidad\": 50,\n  \"tipo_movimiento\": 1,\n  \"fecha\": \"2025-03-27T22:30:00.000Z\",\n  \"usuario_id\": 1,\n  \"box\": {\n    \"id\": 1,\n    \"tipo\": \"Caja Premium\",\n    \"medidas\": \"30x20x15\",\n    \"stock\": 200,\n    \"proveedor_id\": 1\n  },\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Admin Usuario\",\n    \"email\": \"admin@example.com\"\n  }\n}\n\n ```\n\n### 4.2 Crear un Movimiento de Salida (POST)\n\n**Request:**\n\n- Método: `POST`\n    \n- URL: `{{base_url}}/movements`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"caja_id\": 1,\n  \"cantidad\": 30,\n  \"tipo_movimiento\": 2,\n  \"usuario_id\": 1\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 2,\n  \"caja_id\": 1,\n  \"cantidad\": 30,\n  \"tipo_movimiento\": 2,\n  \"fecha\": \"2025-03-27T22:31:00.000Z\",\n  \"usuario_id\": 1,\n  \"box\": {\n    \"id\": 1,\n    \"tipo\": \"Caja Premium\",\n    \"medidas\": \"30x20x15\",\n    \"stock\": 170,\n    \"proveedor_id\": 1\n  },\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Admin Usuario\",\n    \"email\": \"admin@example.com\"\n  }\n}\n\n ```\n\n### 4.3 Obtener Todos los Movimientos (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/movements`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 2,\n    \"caja_id\": 1,\n    \"cantidad\": 30,\n    \"tipo_movimiento\": 2,\n    \"fecha\": \"2025-03-27T22:31:00.000Z\",\n    \"usuario_id\": 1,\n    \"box\": {\n      \"id\": 1,\n      \"tipo\": \"Caja Premium\",\n      \"medidas\": \"30x20x15\",\n      \"stock\": 170,\n      \"proveedor_id\": 1\n    },\n    \"user\": {\n      \"id\": 1,\n      \"name\": \"Admin Usuario\",\n      \"email\": \"admin@example.com\"\n    }\n  },\n  {\n    \"id\": 1,\n    \"caja_id\": 1,\n    \"cantidad\": 50,\n    \"tipo_movimiento\": 1,\n    \"fecha\": \"2025-03-27T22:30:00.000Z\",\n    \"usuario_id\": 1,\n    \"box\": {\n      \"id\": 1,\n      \"tipo\": \"Caja Premium\",\n      \"medidas\": \"30x20x15\",\n      \"stock\": 170,\n      \"proveedor_id\": 1\n    },\n    \"user\": {\n      \"id\": 1,\n      \"name\": \"Admin Usuario\",\n      \"email\": \"admin@example.com\"\n    }\n  }\n]\n\n ```\n\n### 4.4 Obtener un Movimiento por ID (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/movements/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"caja_id\": 1,\n  \"cantidad\": 50,\n  \"tipo_movimiento\": 1,\n  \"fecha\": \"2025-03-27T22:30:00.000Z\",\n  \"usuario_id\": 1,\n  \"box\": {\n    \"id\": 1,\n    \"tipo\": \"Caja Premium\",\n    \"medidas\": \"30x20x15\",\n    \"stock\": 170,\n    \"proveedor_id\": 1\n  },\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Admin Usuario\",\n    \"email\": \"admin@example.com\"\n  }\n}\n\n ```\n\n### 4.5 Obtener Movimientos por Caja (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/movements/box/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 2,\n    \"caja_id\": 1,\n    \"cantidad\": 30,\n    \"tipo_movimiento\": 2,\n    \"fecha\": \"2025-03-27T22:31:00.000Z\",\n    \"usuario_id\": 1,\n    \"user\": {\n      \"id\": 1,\n      \"name\": \"Admin Usuario\",\n      \"email\": \"admin@example.com\"\n    }\n  },\n  {\n    \"id\": 1,\n    \"caja_id\": 1,\n    \"cantidad\": 50,\n    \"tipo_movimiento\": 1,\n    \"fecha\": \"2025-03-27T22:30:00.000Z\",\n    \"usuario_id\": 1,\n    \"user\": {\n      \"id\": 1,\n      \"name\": \"Admin Usuario\",\n      \"email\": \"admin@example.com\"\n    }\n  }\n]\n\n ```\n\n### 4.6 Obtener Movimientos por Usuario (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/movements/user/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 2,\n    \"caja_id\": 1,\n    \"cantidad\": 30,\n    \"tipo_movimiento\": 2,\n    \"fecha\": \"2025-03-27T22:31:00.000Z\",\n    \"usuario_id\": 1,\n    \"box\": {\n      \"id\": 1,\n      \"tipo\": \"Caja Premium\",\n      \"medidas\": \"30x20x15\",\n      \"stock\": 170,\n      \"proveedor_id\": 1\n    }\n  },\n  {\n    \"id\": 1,\n    \"caja_id\": 1,\n    \"cantidad\": 50,\n    \"tipo_movimiento\": 1,\n    \"fecha\": \"2025-03-27T22:30:00.000Z\",\n    \"usuario_id\": 1,\n    \"box\": {\n      \"id\": 1,\n      \"tipo\": \"Caja Premium\",\n      \"medidas\": \"30x20x15\",\n      \"stock\": 170,\n      \"proveedor_id\": 1\n    }\n  }\n]\n\n ```\n\n## 5\\. Alertas (Alerts)\n\n### 5.1 Crear una Alerta (POST)\n\n**Request:**\n\n- Método: `POST`\n    \n- URL: `{{base_url}}/alerts`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"caja_id\": 1,\n  \"mensaje\": \"Stock bajo de Caja Premium\",\n  \"send\": false\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"caja_id\": 1,\n  \"fecha\": \"2025-03-27T22:35:00.000Z\",\n  \"mensaje\": \"Stock bajo de Caja Premium\",\n  \"send\": false\n}\n\n ```\n\n### 5.2 Obtener Todas las Alertas (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/alerts`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 1,\n    \"caja_id\": 1,\n    \"fecha\": \"2025-03-27T22:35:00.000Z\",\n    \"mensaje\": \"Stock bajo de Caja Premium\",\n    \"send\": false,\n    \"box\": {\n      \"id\": 1,\n      \"tipo\": \"Caja Premium\",\n      \"medidas\": \"30x20x15\",\n      \"stock\": 170,\n      \"proveedor_id\": 1\n    }\n  }\n]\n\n ```\n\n### 5.3 Obtener Alertas Pendientes (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/alerts/pendientes`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 1,\n    \"caja_id\": 1,\n    \"fecha\": \"2025-03-27T22:35:00.000Z\",\n    \"mensaje\": \"Stock bajo de Caja Premium\",\n    \"send\": false,\n    \"box\": {\n      \"id\": 1,\n      \"tipo\": \"Caja Premium\",\n      \"medidas\": \"30x20x15\",\n      \"stock\": 170,\n      \"proveedor_id\": 1\n    }\n  }\n]\n\n ```\n\n### 5.4 Obtener una Alerta por ID (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/alerts/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"caja_id\": 1,\n  \"fecha\": \"2025-03-27T22:35:00.000Z\",\n  \"mensaje\": \"Stock bajo de Caja Premium\",\n  \"send\": false,\n  \"box\": {\n    \"id\": 1,\n    \"tipo\": \"Caja Premium\",\n    \"medidas\": \"30x20x15\",\n    \"stock\": 170,\n    \"proveedor_id\": 1\n  }\n}\n\n ```\n\n### 5.5 Actualizar una Alerta (PATCH)\n\n**Request:**\n\n- Método: `PATCH`\n    \n- URL: `{{base_url}}/alerts/1`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"mensaje\": \"Stock crítico de Caja Premium\"\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"caja_id\": 1,\n  \"fecha\": \"2025-03-27T22:35:00.000Z\",\n  \"mensaje\": \"Stock crítico de Caja Premium\",\n  \"send\": false\n}\n\n ```\n\n### 5.6 Marcar una Alerta como Enviada (PATCH)\n\n**Request:**\n\n- Método: `PATCH`\n    \n- URL: `{{base_url}}/alerts/1/marcar-enviada`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"caja_id\": 1,\n  \"fecha\": \"2025-03-27T22:35:00.000Z\",\n  \"mensaje\": \"Stock crítico de Caja Premium\",\n  \"send\": true\n}\n\n ```\n\n### 5.7 Obtener Alertas por Caja (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/alerts/box/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 1,\n    \"caja_id\": 1,\n    \"fecha\": \"2025-03-27T22:35:00.000Z\",\n    \"mensaje\": \"Stock crítico de Caja Premium\",\n    \"send\": true\n  }\n]\n\n ```\n\n### 5.8 Eliminar una Alerta (DELETE)\n\n**Request:**\n\n- Método: `DELETE`\n    \n- URL: `{{base_url}}/alerts/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"caja_id\": 1,\n  \"fecha\": \"2025-03-27T22:35:00.000Z\",\n  \"mensaje\": \"Stock crítico de Caja Premium\",\n  \"send\": true\n}\n\n ```\n\n## Flujo de prueba\n\nPara probar completamente la aplicación, te recomiendo seguir este flujo:\n\n1. Crear un usuario\n    \n2. Crear un proveedor\n    \n3. Crear una caja asociada al proveedor\n    \n4. Realizar un movimiento de entrada para aumentar el stock\n    \n5. Realizar un movimiento de salida para disminuir el stock\n    \n6. Verificar el stock de la caja\n    \n7. Crear una alerta manualmente\n    \n8. Marcar la alerta como enviada\n    \n9. Obtener todas las alertas\n    \n10. Obtener todos los movimientos de la caja\n    \n11. Obtener todos los movimientos del usuario\n    \n\nEste flujo te permitirá probar todas las funcionalidades principales de la aplicación y verificar que todo funciona correctamente.",
+		"description": "### Guía para probar la Aplicación\n\nA continuación, te proporciono ejemplos detallados para probar cada endpoint de tu aplicación. He organizado los ejemplos por entidad y tipo de operación.\n\n## 1\\. Usuarios (Users)\n\n### 1.1 Crear un Usuario (POST)\n\n**Request:**\n\n- Método: `POST`\n    \n- URL: `{{base_url}}/users`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"name\": \"Admin Usuario\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"123456\",\n  \"idRol\": 1\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Admin Usuario\",\n  \"email\": \"admin@example.com\",\n  \"idRol\": 1\n}\n\n ```\n\n### 1.2 Obtener Todos los Usuarios (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/users`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 1,\n    \"name\": \"Admin Usuario\",\n    \"email\": \"admin@example.com\",\n    \"idRol\": 1\n  }\n]\n\n ```\n\n### 1.3 Obtener un Usuario por ID (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/users/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Admin Usuario\",\n  \"email\": \"admin@example.com\",\n  \"idRol\": 1\n}\n\n ```\n\n### 1.4 Actualizar un Usuario (PATCH)\n\n**Request:**\n\n- Método: `PATCH`\n    \n- URL: `{{base_url}}/users/1`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"name\": \"Admin Actualizado\",\n  \"email\": \"admin.updated@example.com\"\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Admin Actualizado\",\n  \"email\": \"admin.updated@example.com\",\n  \"idRol\": 1\n}\n\n ```\n\n### 1.5 Eliminar un Usuario (DELETE)\n\n**Request:**\n\n- Método: `DELETE`\n    \n- URL: `{{base_url}}/users/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Admin Actualizado\",\n  \"email\": \"admin.updated@example.com\",\n  \"password\": \"[hashed password]\",\n  \"idRol\": 1\n}\n\n ```\n\n## 2\\. Proveedores (Suppliers)\n\n### 2.1 Crear un Proveedor (POST)\n\n**Request:**\n\n- Método: `POST`\n    \n- URL: `{{base_url}}/suppliers`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"name\": \"Proveedor Cajas S.A.\",\n  \"email\": \"contacto@proveedorcajas.com\",\n  \"telefono\": \"123456789\"\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Proveedor Cajas S.A.\",\n  \"email\": \"contacto@proveedorcajas.com\",\n  \"telefono\": \"123456789\"\n}\n\n ```\n\n### 2.2 Obtener Todos los Proveedores (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/suppliers`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 1,\n    \"name\": \"Proveedor Cajas S.A.\",\n    \"email\": \"contacto@proveedorcajas.com\",\n    \"telefono\": \"123456789\"\n  }\n]\n\n ```\n\n### 2.3 Obtener un Proveedor por ID (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/suppliers/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Proveedor Cajas S.A.\",\n  \"email\": \"contacto@proveedorcajas.com\",\n  \"telefono\": \"123456789\",\n  \"boxes\": []\n}\n\n ```\n\n### 2.4 Actualizar un Proveedor (PATCH)\n\n**Request:**\n\n- Método: `PATCH`\n    \n- URL: `{{base_url}}/suppliers/1`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"name\": \"Proveedor Cajas Actualizado\",\n  \"telefono\": \"987654321\"\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Proveedor Cajas Actualizado\",\n  \"email\": \"contacto@proveedorcajas.com\",\n  \"telefono\": \"987654321\"\n}\n\n ```\n\n### 2.5 Eliminar un Proveedor (DELETE)\n\n**Request:**\n\n- Método: `DELETE`\n    \n- URL: `{{base_url}}/suppliers/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"name\": \"Proveedor Cajas Actualizado\",\n  \"email\": \"contacto@proveedorcajas.com\",\n  \"telefono\": \"987654321\"\n}\n\n ```\n\n## 3\\. Cajas (Box)\n\n### 3.1 Crear una Caja (POST)\n\n**Request:**\n\n- Método: `POST`\n    \n- URL: `{{base_url}}/box`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"tipo\": \"Caja Estándar\",\n  \"medidas\": \"30x20x15\",\n  \"stock\": 100,\n  \"proveedor_id\": 1\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"tipo\": \"Caja Estándar\",\n  \"medidas\": \"30x20x15\",\n  \"stock\": 100,\n  \"proveedor_id\": 1\n}\n\n ```\n\n### 3.2 Obtener Todas las Cajas (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/box`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 1,\n    \"tipo\": \"Caja Estándar\",\n    \"medidas\": \"30x20x15\",\n    \"stock\": 100,\n    \"proveedor_id\": 1,\n    \"supplier\": {\n      \"id\": 1,\n      \"name\": \"Proveedor Cajas S.A.\",\n      \"email\": \"contacto@proveedorcajas.com\",\n      \"telefono\": \"123456789\"\n    }\n  }\n]\n\n ```\n\n### 3.3 Obtener una Caja por ID (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/box/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"tipo\": \"Caja Estándar\",\n  \"medidas\": \"30x20x15\",\n  \"stock\": 100,\n  \"proveedor_id\": 1,\n  \"supplier\": {\n    \"id\": 1,\n    \"name\": \"Proveedor Cajas S.A.\",\n    \"email\": \"contacto@proveedorcajas.com\",\n    \"telefono\": \"123456789\"\n  },\n  \"movements\": [],\n  \"alerts\": []\n}\n\n ```\n\n### 3.4 Actualizar una Caja (PATCH)\n\n**Request:**\n\n- Método: `PATCH`\n    \n- URL: `{{base_url}}/box/1`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"tipo\": \"Caja Premium\",\n  \"stock\": 150\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"tipo\": \"Caja Premium\",\n  \"medidas\": \"30x20x15\",\n  \"stock\": 150,\n  \"proveedor_id\": 1\n}\n\n ```\n\n### 3.5 Verificar Stock de una Caja (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/box/1/verificar-stock`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"tipo\": \"Caja Premium\",\n  \"medidas\": \"30x20x15\",\n  \"stock\": 150,\n  \"proveedor_id\": 1,\n  \"supplier\": {\n    \"id\": 1,\n    \"name\": \"Proveedor Cajas S.A.\",\n    \"email\": \"contacto@proveedorcajas.com\",\n    \"telefono\": \"123456789\"\n  },\n  \"movements\": [],\n  \"alerts\": []\n}\n\n ```\n\n### 3.6 Eliminar una Caja (DELETE)\n\n**Request:**\n\n- Método: `DELETE`\n    \n- URL: `{{base_url}}/box/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"tipo\": \"Caja Premium\",\n  \"medidas\": \"30x20x15\",\n  \"stock\": 150,\n  \"proveedor_id\": 1\n}\n\n ```\n\n## 4\\. Movimientos (Movements)\n\n### 4.1 Crear un Movimiento de Entrada (POST)\n\n**Request:**\n\n- Método: `POST`\n    \n- URL: `{{base_url}}/movements`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"caja_id\": 1,\n  \"cantidad\": 50,\n  \"tipo_movimiento\": 1,\n  \"usuario_id\": 1\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"caja_id\": 1,\n  \"cantidad\": 50,\n  \"tipo_movimiento\": 1,\n  \"fecha\": \"2025-03-27T22:30:00.000Z\",\n  \"usuario_id\": 1,\n  \"box\": {\n    \"id\": 1,\n    \"tipo\": \"Caja Premium\",\n    \"medidas\": \"30x20x15\",\n    \"stock\": 200,\n    \"proveedor_id\": 1\n  },\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Admin Usuario\",\n    \"email\": \"admin@example.com\"\n  }\n}\n\n ```\n\n### 4.2 Crear un Movimiento de Salida (POST)\n\n**Request:**\n\n- Método: `POST`\n    \n- URL: `{{base_url}}/movements`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"caja_id\": 1,\n  \"cantidad\": 30,\n  \"tipo_movimiento\": 2,\n  \"usuario_id\": 1\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 2,\n  \"caja_id\": 1,\n  \"cantidad\": 30,\n  \"tipo_movimiento\": 2,\n  \"fecha\": \"2025-03-27T22:31:00.000Z\",\n  \"usuario_id\": 1,\n  \"box\": {\n    \"id\": 1,\n    \"tipo\": \"Caja Premium\",\n    \"medidas\": \"30x20x15\",\n    \"stock\": 170,\n    \"proveedor_id\": 1\n  },\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Admin Usuario\",\n    \"email\": \"admin@example.com\"\n  }\n}\n\n ```\n\n### 4.3 Obtener Todos los Movimientos (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/movements`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 2,\n    \"caja_id\": 1,\n    \"cantidad\": 30,\n    \"tipo_movimiento\": 2,\n    \"fecha\": \"2025-03-27T22:31:00.000Z\",\n    \"usuario_id\": 1,\n    \"box\": {\n      \"id\": 1,\n      \"tipo\": \"Caja Premium\",\n      \"medidas\": \"30x20x15\",\n      \"stock\": 170,\n      \"proveedor_id\": 1\n    },\n    \"user\": {\n      \"id\": 1,\n      \"name\": \"Admin Usuario\",\n      \"email\": \"admin@example.com\"\n    }\n  },\n  {\n    \"id\": 1,\n    \"caja_id\": 1,\n    \"cantidad\": 50,\n    \"tipo_movimiento\": 1,\n    \"fecha\": \"2025-03-27T22:30:00.000Z\",\n    \"usuario_id\": 1,\n    \"box\": {\n      \"id\": 1,\n      \"tipo\": \"Caja Premium\",\n      \"medidas\": \"30x20x15\",\n      \"stock\": 170,\n      \"proveedor_id\": 1\n    },\n    \"user\": {\n      \"id\": 1,\n      \"name\": \"Admin Usuario\",\n      \"email\": \"admin@example.com\"\n    }\n  }\n]\n\n ```\n\n### 4.4 Obtener un Movimiento por ID (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/movements/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"caja_id\": 1,\n  \"cantidad\": 50,\n  \"tipo_movimiento\": 1,\n  \"fecha\": \"2025-03-27T22:30:00.000Z\",\n  \"usuario_id\": 1,\n  \"box\": {\n    \"id\": 1,\n    \"tipo\": \"Caja Premium\",\n    \"medidas\": \"30x20x15\",\n    \"stock\": 170,\n    \"proveedor_id\": 1\n  },\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Admin Usuario\",\n    \"email\": \"admin@example.com\"\n  }\n}\n\n ```\n\n### 4.5 Obtener Movimientos por Caja (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/movements/box/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 2,\n    \"caja_id\": 1,\n    \"cantidad\": 30,\n    \"tipo_movimiento\": 2,\n    \"fecha\": \"2025-03-27T22:31:00.000Z\",\n    \"usuario_id\": 1,\n    \"user\": {\n      \"id\": 1,\n      \"name\": \"Admin Usuario\",\n      \"email\": \"admin@example.com\"\n    }\n  },\n  {\n    \"id\": 1,\n    \"caja_id\": 1,\n    \"cantidad\": 50,\n    \"tipo_movimiento\": 1,\n    \"fecha\": \"2025-03-27T22:30:00.000Z\",\n    \"usuario_id\": 1,\n    \"user\": {\n      \"id\": 1,\n      \"name\": \"Admin Usuario\",\n      \"email\": \"admin@example.com\"\n    }\n  }\n]\n\n ```\n\n### 4.6 Obtener Movimientos por Usuario (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/movements/user/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 2,\n    \"caja_id\": 1,\n    \"cantidad\": 30,\n    \"tipo_movimiento\": 2,\n    \"fecha\": \"2025-03-27T22:31:00.000Z\",\n    \"usuario_id\": 1,\n    \"box\": {\n      \"id\": 1,\n      \"tipo\": \"Caja Premium\",\n      \"medidas\": \"30x20x15\",\n      \"stock\": 170,\n      \"proveedor_id\": 1\n    }\n  },\n  {\n    \"id\": 1,\n    \"caja_id\": 1,\n    \"cantidad\": 50,\n    \"tipo_movimiento\": 1,\n    \"fecha\": \"2025-03-27T22:30:00.000Z\",\n    \"usuario_id\": 1,\n    \"box\": {\n      \"id\": 1,\n      \"tipo\": \"Caja Premium\",\n      \"medidas\": \"30x20x15\",\n      \"stock\": 170,\n      \"proveedor_id\": 1\n    }\n  }\n]\n\n ```\n\n## 5\\. Alertas (Alerts)\n\n### 5.1 Crear una Alerta (POST)\n\n**Request:**\n\n- Método: `POST`\n    \n- URL: `{{base_url}}/alerts`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"caja_id\": 1,\n  \"mensaje\": \"Stock bajo de Caja Premium\",\n  \"send\": false\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"caja_id\": 1,\n  \"fecha\": \"2025-03-27T22:35:00.000Z\",\n  \"mensaje\": \"Stock bajo de Caja Premium\",\n  \"send\": false\n}\n\n ```\n\n### 5.2 Obtener Todas las Alertas (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/alerts`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 1,\n    \"caja_id\": 1,\n    \"fecha\": \"2025-03-27T22:35:00.000Z\",\n    \"mensaje\": \"Stock bajo de Caja Premium\",\n    \"send\": false,\n    \"box\": {\n      \"id\": 1,\n      \"tipo\": \"Caja Premium\",\n      \"medidas\": \"30x20x15\",\n      \"stock\": 170,\n      \"proveedor_id\": 1\n    }\n  }\n]\n\n ```\n\n### 5.3 Obtener Alertas Pendientes (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/alerts/pendientes`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 1,\n    \"caja_id\": 1,\n    \"fecha\": \"2025-03-27T22:35:00.000Z\",\n    \"mensaje\": \"Stock bajo de Caja Premium\",\n    \"send\": false,\n    \"box\": {\n      \"id\": 1,\n      \"tipo\": \"Caja Premium\",\n      \"medidas\": \"30x20x15\",\n      \"stock\": 170,\n      \"proveedor_id\": 1\n    }\n  }\n]\n\n ```\n\n### 5.4 Obtener una Alerta por ID (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/alerts/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"caja_id\": 1,\n  \"fecha\": \"2025-03-27T22:35:00.000Z\",\n  \"mensaje\": \"Stock bajo de Caja Premium\",\n  \"send\": false,\n  \"box\": {\n    \"id\": 1,\n    \"tipo\": \"Caja Premium\",\n    \"medidas\": \"30x20x15\",\n    \"stock\": 170,\n    \"proveedor_id\": 1\n  }\n}\n\n ```\n\n### 5.5 Actualizar una Alerta (PATCH)\n\n**Request:**\n\n- Método: `PATCH`\n    \n- URL: `{{base_url}}/alerts/1`\n    \n- Body (raw JSON):\n    \n\n``` json\n{\n  \"mensaje\": \"Stock crítico de Caja Premium\"\n}\n\n ```\n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"caja_id\": 1,\n  \"fecha\": \"2025-03-27T22:35:00.000Z\",\n  \"mensaje\": \"Stock crítico de Caja Premium\",\n  \"send\": false\n}\n\n ```\n\n### 5.6 Marcar una Alerta como Enviada (PATCH)\n\n**Request:**\n\n- Método: `PATCH`\n    \n- URL: `{{base_url}}/alerts/1/marcar-enviada`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"caja_id\": 1,\n  \"fecha\": \"2025-03-27T22:35:00.000Z\",\n  \"mensaje\": \"Stock crítico de Caja Premium\",\n  \"send\": true\n}\n\n ```\n\n### 5.7 Obtener Alertas por Caja (GET)\n\n**Request:**\n\n- Método: `GET`\n    \n- URL: `{{base_url}}/alerts/box/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n[\n  {\n    \"id\": 1,\n    \"caja_id\": 1,\n    \"fecha\": \"2025-03-27T22:35:00.000Z\",\n    \"mensaje\": \"Stock crítico de Caja Premium\",\n    \"send\": true\n  }\n]\n\n ```\n\n### 5.8 Eliminar una Alerta (DELETE)\n\n**Request:**\n\n- Método: `DELETE`\n    \n- URL: `{{base_url}}/alerts/1`\n    \n\n**Respuesta esperada:**\n\n``` json\n{\n  \"id\": 1,\n  \"caja_id\": 1,\n  \"fecha\": \"2025-03-27T22:35:00.000Z\",\n  \"mensaje\": \"Stock crítico de Caja Premium\",\n  \"send\": true\n}\n\n ```\n\n## Flujo de prueba\n\nPara probar completamente la aplicación, te recomiendo seguir este flujo:\n\n1. Crear un usuario\n    \n2. Crear un proveedor\n    \n3. Crear una caja asociada al proveedor\n    \n4. Realizar un movimiento de entrada para aumentar el stock\n    \n5. Realizar un movimiento de salida para disminuir el stock\n    \n6. Verificar el stock de la caja\n    \n7. Crear una alerta manualmente\n    \n8. Marcar la alerta como enviada\n    \n9. Obtener todas las alertas\n    \n10. Obtener todos los movimientos de la caja\n    \n11. Obtener todos los movimientos del usuario\n    \n\nEste flujo te permitirá probar todas las funcionalidades principales de la aplicación y verificar que todo funciona correctamente.\n\n``` markdown\n...\n\n ```\n\n#### Alertas Gestionadas\n\n- **Método**: GET\n    \n- **URL**: `{{base_url}}/alerts/by-status?estado=GESTIONADO`\n    \n- **Descripción**: Obtiene todas las alertas en estado GESTIONADO\n    \n\n#### Alertas Finalizadas\n\n- **Método**: GET\n    \n- **URL**: `{{base_url}}/alerts/by-status?estado=FINALIZADO`\n    \n- **Descripción**: Obtiene todas las alertas en estado FINALIZADO\n    \n\n### Cambiar Estado de Alerta\n\n#### Marcar como GESTIONADO\n\n- **Método**: PATCH\n    \n- **URL**: `{{base_url}}/alerts/2/status` (reemplaza \"2\" con el ID de la alerta)\n    \n- **Headers**:\n    \n- Content-Type: application/json\n    \n- **Body**:\n    \n\n``` json\n{\n  \"estado\": \"GESTIONADO\",\n  \"notas\": \"Pedido realizado al proveedor XYZ. Referencia: PED-12345\",\n  \"gestionado_por\": 1\n}\n\n ```\n\n- **Descripción**: Cambia el estado de una alerta a GESTIONADO y registra automáticamente la fecha de gestión\n    \n\n**Respuesta Ejemplo**:\n\n``` json\n{\n  \"id\": 2,\n  \"caja_id\": 3,\n  \"fecha\": \"2025-04-02T00:00:00.000Z\",\n  \"mensaje\": \"Stock bajo para caja Caja 16: 900 unidades restantes (umbral: 1000)\",\n  \"send\": true,\n  \"email_enviado\": \"2025-04-02T10:15:30.123Z\",\n  \"estado\": \"GESTIONADO\",\n  \"fecha_gestion\": \"2025-04-07T12:30:45.678Z\",\n  \"fecha_finalizacion\": null,\n  \"notas\": \"Pedido realizado al proveedor XYZ. Referencia: PED-12345\",\n  \"gestionado_por\": 1,\n  \"box\": {\n    \"id\": 3,\n    \"tipo\": \"Caja 16\",\n    \"medidas\": \"30x20x15\",\n    \"stock\": 900,\n    \"proveedor_id\": 1,\n    \"alerta_umbral\": 1000\n  },\n  \"gestor\": {\n    \"id\": 1,\n    \"name\": \"Admin\",\n    \"email\": \"admin@ejemplo.com\"\n  }\n}\n\n ```\n\n#### Marcar como FINALIZADO\n\n- **Método**: PATCH\n    \n- **URL**: `{{base_url}}/alerts/2/status` (reemplaza \"2\" con el ID de la alerta)\n    \n- **Headers**:\n    \n- Content-Type: application/json\n    \n- **Body**:\n    \n\n``` json\n{\n  \"estado\": \"FINALIZADO\",\n  \"notas\": \"Pedido recibido y stock actualizado. Referencia de entrega: ENT-6789\",\n  \"gestionado_por\": 1\n}\n\n ```\n\n- **Descripción**: Cambia el estado de una alerta a FINALIZADO y registra automáticamente la fecha de finalización\n    \n\n**Respuesta Ejemplo**:\n\n``` json\n{\n  \"id\": 2,\n  \"caja_id\": 3,\n  \"fecha\": \"2025-04-02T00:00:00.000Z\",\n  \"mensaje\": \"Stock bajo para caja Caja 16: 900 unidades restantes (umbral: 1000)\",\n  \"send\": true,\n  \"email_enviado\": \"2025-04-02T10:15:30.123Z\",\n  \"estado\": \"FINALIZADO\",\n  \"fecha_gestion\": \"2025-04-07T12:30:45.678Z\",\n  \"fecha_finalizacion\": \"2025-04-10T09:15:20.456Z\",\n  \"notas\": \"Pedido recibido y stock actualizado. Referencia de entrega: ENT-6789\",\n  \"gestionado_por\": 1,\n  \"box\": {\n    \"id\": 3,\n    \"tipo\": \"Caja 16\",\n    \"medidas\": \"30x20x15\",\n    \"stock\": 900,\n    \"proveedor_id\": 1,\n    \"alerta_umbral\": 1000\n  },\n  \"gestor\": {\n    \"id\": 1,\n    \"name\": \"Admin\",\n    \"email\": \"admin@ejemplo.com\"\n  }\n}\n\n ```\n\n### Ver Detalles de una Alerta\n\n- **Método**: GET\n    \n- **URL**: `{{base_url}}/alerts/2` (reemplaza \"2\" con el ID de la alerta)\n    \n- **Descripción**: Obtiene los detalles completos de una alerta específica\n    \n\n## Dashboards\n\n### Dashboard de Administrador\n\n- **Método**: GET\n    \n- **URL**: `{{base_url}}/dashboard/admin`\n    \n- **Descripción**: Obtiene un resumen completo del estado del sistema para administradores\n    \n\n**Respuesta Ejemplo**:\n\n``` json\n{\n  \"alertas\": {\n    \"pendientes\": 3,\n    \"gestionadas\": 2,\n    \"finalizadas\": 5,\n    \"total\": 10\n  },\n  \"ultimasAlertasPendientes\": [\n    {\n      \"id\": 10,\n      \"caja_id\": 5,\n      \"fecha\": \"2025-04-06T00:00:00.000Z\",\n      \"mensaje\": \"Stock bajo para caja Caja 20: 50 unidades restantes (umbral: 100)\",\n      \"send\": true,\n      \"email_enviado\": \"2025-04-06T08:30:15.123Z\",\n      \"estado\": \"PENDIENTE\",\n      \"box\": {\n        \"id\": 5,\n        \"tipo\": \"Caja 20\",\n        \"medidas\": \"40x30x20\",\n        \"stock\": 50,\n        \"proveedor_id\": 2,\n        \"alerta_umbral\": 100\n      }\n    }\n    // ... más alertas pendientes\n  ],\n  \"ultimasAlertasGestionadas\": [\n    {\n      \"id\": 8,\n      \"caja_id\": 3,\n      \"fecha\": \"2025-04-05T00:00:00.000Z\",\n      \"mensaje\": \"Stock bajo para caja Caja 16: 800 unidades restantes (umbral: 1000)\",\n      \"send\": true,\n      \"email_enviado\": \"2025-04-05T09:45:30.123Z\",\n      \"estado\": \"GESTIONADO\",\n      \"fecha_gestion\": \"2025-04-05T14:20:10.456Z\",\n      \"box\": {\n        \"id\": 3,\n        \"tipo\": \"Caja 16\",\n        \"medidas\": \"30x20x15\",\n        \"stock\": 800,\n        \"proveedor_id\": 1,\n        \"alerta_umbral\": 1000\n      },\n      \"gestor\": {\n        \"id\": 1,\n        \"name\": \"Admin\",\n        \"email\": \"admin@ejemplo.com\"\n      }\n    }\n    // ... más alertas gestionadas\n  ],\n  \"cajasStockBajo\": [\n    {\n      \"id\": 5,\n      \"tipo\": \"Caja 20\",\n      \"medidas\": \"40x30x20\",\n      \"stock\": 50,\n      \"proveedor_id\": 2,\n      \"alerta_umbral\": 100,\n      \"supplier\": {\n        \"id\": 2,\n        \"name\": \"Proveedor B\",\n        \"email\": \"contacto@proveedorb.com\",\n        \"telefono\": \"987-654-3210\"\n      }\n    }\n    // ... más cajas con stock bajo\n  ],\n  \"estadisticas\": {\n    \"movimientosRecientes\": 25,\n    \"totalCajas\": 8,\n    \"totalProveedores\": 3\n  }\n}\n\n ```\n\n### Dashboard de Usuario\n\n- **Método**: GET\n    \n- **URL**: `{{base_url}}/dashboard/user`\n    \n- **Descripción**: Obtiene un resumen del estado del sistema para usuarios normales\n    \n\n**Respuesta Ejemplo**:\n\n``` json\n{\n  \"cajasStockBajo\": [\n    {\n      \"id\": 5,\n      \"tipo\": \"Caja 20\",\n      \"medidas\": \"40x30x20\",\n      \"stock\": 50,\n      \"proveedor_id\": 2,\n      \"alerta_umbral\": 100,\n      \"supplier\": {\n        \"id\": 2,\n        \"name\": \"Proveedor B\",\n        \"email\": \"contacto@proveedorb.com\",\n        \"telefono\": \"987-654-3210\"\n      },\n      \"estado_gestion\": \"PENDIENTE\",\n      \"fecha_gestion\": null,\n      \"fecha_finalizacion\": null,\n      \"notas\": null\n    },\n    {\n      \"id\": 3,\n      \"tipo\": \"Caja 16\",\n      \"medidas\": \"30x20x15\",\n      \"stock\": 800,\n      \"proveedor_id\": 1,\n      \"alerta_umbral\": 1000,\n      \"supplier\": {\n        \"id\": 1,\n        \"name\": \"Proveedor A\",\n        \"email\": \"contacto@proveedora.com\",\n        \"telefono\": \"123-456-7890\"\n      },\n      \"estado_gestion\": \"GESTIONADO\",\n      \"fecha_gestion\": \"2025-04-05T14:20:10.456Z\",\n      \"fecha_finalizacion\": null,\n      \"notas\": \"Pedido realizado al proveedor. Referencia: PED-12345\"\n    }\n    // ... más cajas con stock bajo y su estado de gestión\n  ],\n  \"estadisticas\": {\n    \"totalCajas\": 8,\n    \"totalMovimientos\": 120\n  }\n}\n\n ```\n\n  \n\\-Verifica que existan usuarios con rol de administrador (idRol = 1) para las pruebas de cambio de estado  \n\\-Las fechas se registran automáticamente al cambiar el estado, no es necesario especificarlas en la solicitud  \n\\-No se puede cambiar el estado de una alerta FINALIZADA  \n\\-No se puede cambiar una alerta de PENDIENTE a FINALIZADA directamente, debe pasar primero por GESTIONADA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29310963"
 	},
@@ -169,7 +169,10 @@
 					"name": "Get All Suppliers",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
@@ -177,7 +180,10 @@
 					"name": "Get By Id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
@@ -447,7 +453,19 @@
 					"name": "Get All Movements",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/movements",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"movements"
+							]
+						}
 					},
 					"response": []
 				},
@@ -455,7 +473,10 @@
 					"name": "Get By Id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
@@ -463,7 +484,10 @@
 					"name": "Get X Box",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
@@ -471,7 +495,10 @@
 					"name": "Get X User",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
@@ -513,7 +540,19 @@
 					"name": "Get All Alerts",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/alerts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"alerts"
+							]
+						}
 					},
 					"response": []
 				},
@@ -521,7 +560,20 @@
 					"name": "Get Alerts Pending",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/alerts/pendientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"alerts",
+								"pendientes"
+							]
+						}
 					},
 					"response": []
 				},
@@ -563,6 +615,289 @@
 								"api",
 								"alerts",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send aler penmdientes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/alerts/enviar-correos-pendientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"alerts",
+								"enviar-correos-pendientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "chequed send alert by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/alerts/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"alerts",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/mail/test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"mail",
+								"test"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Dashboard de Administrador",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/dashboard/admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"dashboard",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dashboard de Usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/dashboard/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"dashboard",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alertas Gestionadas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/alerts/by-status?estado=GESTIONADO",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"alerts",
+								"by-status"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "GESTIONADO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alertas Finalizadas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/alerts/by-status?estado=FINALIZADO",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"alerts",
+								"by-status"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "FINALIZADO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Marcar como GESTIONADO",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"estado\": \"GESTIONADO\",\r\n  \"notas\": \"Pedido realizado al proveedor XYZ. Referencia: PED-12345\",\r\n  \"gestionado_por\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/alerts/2/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"alerts",
+								"2",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Marcar como FINALIZADO",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"estado\": \"FINALIZADO\",\r\n  \"notas\": \"Pedido recibido y stock actualizado. Referencia de entrega: ENT-6789\",\r\n  \"gestionado_por\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/alerts/2/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"alerts",
+								"2",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Detalles de una Alerta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/alerts/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"alerts",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Alertas Pendientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/alerts/by-status?estado=PENDIENTE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"alerts",
+								"by-status"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "PENDIENTE"
+								}
 							]
 						}
 					},
