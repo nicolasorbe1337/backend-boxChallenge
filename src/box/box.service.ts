@@ -71,13 +71,13 @@ export class BoxService {
   async verificarStock(id: number) {
     const box = await this.findOne(id)
 
-    // Ejemplo: crear una alerta si el stock es menor a 10
-    if (box.stock < 10) {
+    // Usar el umbral personalizado de la caja
+    if (box.stock <= box.alerta_umbral) {
       await this.prisma.alerts.create({
         data: {
           caja_id: id,
           fecha: new Date(),
-          mensaje: `Stock bajo para caja ${box.tipo}: ${box.stock} unidades restantes`,
+          mensaje: `Stock bajo para caja ${box.tipo}: ${box.stock} unidades restantes (umbral: ${box.alerta_umbral})`,
           send: false,
         },
       })

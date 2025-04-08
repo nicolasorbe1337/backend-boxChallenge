@@ -1,18 +1,25 @@
-/* eslint-disable */
-
-import { Injectable, NotFoundException, BadRequestException } from "@nestjs/common"
-import { PrismaService } from "../prisma/prisma.service"
+import { BadRequestException, Injectable, Logger, NotFoundException } from "@nestjs/common"
+import { UpdateMovementDto } from "./dto/update-movement.dto"
 import { CreateMovementDto } from "./dto/create-movement.dto"
-import  { UpdateMovementDto } from "./dto/update-movement.dto"
+import { PrismaService } from "src/prisma/prisma.service"
+import { MailService } from "src/mail/mail/mail.service"
 
 @Injectable()
 export class MovementsService {
-  constructor(private prisma: PrismaService) {}
+  private readonly logger = new Logger(MovementsService.name)
+
+  constructor(
+    private prisma: PrismaService,
+    private mailService: MailService,
+  ) {}
 
   async create(createMovementDto: CreateMovementDto) {
     // Verificar si la caja existe
     const box = await this.prisma.box.findUnique({
       where: { id: createMovementDto.caja_id },
+      include: {
+        supplier: true, // Incluir información del proveedor para el correo
+      },
     })
 
     if (!box) {
@@ -68,16 +75,50 @@ export class MovementsService {
         data: { stock: nuevoStock },
       })
 
-      // Verificar si el stock es bajo (ejemplo: menor a 10)
-      if (nuevoStock < 10) {
-        await prisma.alerts.create({
+      // Verificar si el stock es bajo según el umbral personalizado de la caja
+      if (nuevoStock <= box.alerta_umbral) {
+        // Crear la alerta en la base de datos
+        const alerta = await prisma.alerts.create({
           data: {
             caja_id: createMovementDto.caja_id,
             fecha: new Date(),
-            mensaje: `Stock bajo para caja ${box.tipo}: ${nuevoStock} unidades restantes`,
+            mensaje: `Stock bajo para caja ${box.tipo}: ${nuevoStock} unidades restantes (umbral: ${box.alerta_umbral})`,
             send: false,
           },
         })
+
+        // Intentar enviar el correo electrónico
+        try {
+          await this.mailService.sendStockAlert({
+            subject: `ALERTA: Stock bajo en ${box.tipo}`,
+            boxName: box.tipo,
+            medidas: box.medidas,
+            currentStock: nuevoStock,
+            threshold: box.alerta_umbral,
+            boxId: box.id,
+            supplierInfo: box.supplier
+              ? {
+                  name: box.supplier.name,
+                  email: box.supplier.email,
+                  telefono: box.supplier.telefono,
+                }
+              : undefined,
+          })
+
+          // Actualizar la alerta para marcarla como enviada
+          await prisma.alerts.update({
+            where: { id: alerta.id },
+            data: {
+              send: true,
+              email_enviado: new Date(),
+            },
+          })
+
+          this.logger.log(`Correo de alerta enviado automáticamente para la caja ${box.id}`)
+        } catch (error) {
+          this.logger.error(`Error al enviar correo de alerta automático: ${error.message}`)
+          // No lanzamos el error para que no afecte la transacción principal
+        }
       }
 
       return movimiento
@@ -164,4 +205,3 @@ export class MovementsService {
     })
   }
 }
-

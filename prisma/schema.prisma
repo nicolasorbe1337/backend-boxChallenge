@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,25 +9,34 @@ datasource db {
 }
 
 model alerts {
-  id      Int      @id @default(autoincrement())
-  caja_id Int
-  fecha   DateTime @db.Date
-  mensaje String   @db.VarChar(255)
-  send    Boolean
-  box     box      @relation(fields: [caja_id], references: [id])
+  id              Int       @id @default(autoincrement())
+  caja_id         Int
+  fecha           DateTime  @db.Date
+  mensaje         String    @db.VarChar(255)
+  send            Boolean
+  email_enviado   DateTime?
+  estado          String    @default("PENDIENTE") // PENDIENTE, GESTIONADO, FINALIZADO
+  fecha_gestion   DateTime?
+  fecha_finalizacion DateTime?
+  notas           String?   @db.Text
+  gestionado_por  Int?
+  box             box       @relation(fields: [caja_id], references: [id])
+  gestor          users?    @relation(fields: [gestionado_por], references: [id])
 
   @@index([caja_id])
+  @@index([gestionado_por])
 }
 
 model box {
-  id           Int         @id @default(autoincrement())
-  tipo         String      @db.VarChar(255)
-  medidas      String      @db.VarChar(255)
-  stock        Int
-  proveedor_id Int
-  alerts       alerts[]
-  movements    movements[]
-  supplier     suppliers   @relation(fields: [proveedor_id], references: [id])
+  id                Int         @id @default(autoincrement())
+  tipo              String      @db.VarChar(255)
+  medidas           String      @db.VarChar(255)
+  stock             Int
+  proveedor_id      Int
+  alerta_umbral     Int         @default(10)
+  alerts            alerts[]
+  movements         movements[]
+  supplier          suppliers   @relation(fields: [proveedor_id], references: [id])
 
   @@index([proveedor_id])
 }
@@ -46,11 +56,11 @@ model movements {
 }
 
 model suppliers {
-  id       Int    @id @default(autoincrement())
-  name     String @db.VarChar(255)
-  email    String @db.VarChar(255)
-  telefono String @db.VarChar(255)
-  boxes    box[]
+  id              Int    @id @default(autoincrement())
+  name            String @db.VarChar(255)
+  email           String @db.VarChar(255)
+  telefono        String @db.VarChar(255)
+  boxes           box[]
 }
 
 model users {
@@ -60,4 +70,6 @@ model users {
   password   String      @db.VarChar(255)
   idRol      Int         // 1 = ADMIN, 2 = USER
   movements  movements[]
+  alerts     alerts[]    // Relación para saber qué alertas ha gestionado
 }
+

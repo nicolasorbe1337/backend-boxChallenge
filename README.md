@@ -1,320 +1,471 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Sistema de Gestión de Inventario - Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Descripción
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Este proyecto es un backend para un Sistema de Gestión de Inventario desarrollado con NestJS y Prisma. Permite gestionar cajas, proveedores, movimientos de stock, alertas de inventario bajo y usuarios, con un sistema de notificaciones por correo electrónico.
 
-## Description
+## Tecnologías Utilizadas
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **NestJS**: Framework para construir aplicaciones del lado del servidor eficientes y escalables
+- **Prisma**: ORM para Node.js y TypeScript
+- **MySQL**: Base de datos relacional
+- **Nodemailer**: Módulo para enviar correos electrónicos
+- **TypeScript**: Lenguaje de programación tipado
+- **Jest**: Framework de pruebas
+- **Swagger**: Documentación de API
 
-## Project setup
+## Estructura del Proyecto
 
-```bash
-$ npm install
+```
+src/
+├── alerts/                # Módulo de alertas
+│   ├── dto/               # Objetos de transferencia de datos
+│   ├── alerts.controller.ts
+│   ├── alerts.module.ts
+│   └── alerts.service.ts
+├── box/                   # Módulo de cajas
+├── dashboard/             # Módulo de dashboard
+├── mail/                  # Módulo de correo electrónico
+├── movements/             # Módulo de movimientos
+├── prisma/                # Configuración de Prisma
+├── suppliers/             # Módulo de proveedores
+├── users/                 # Módulo de usuarios
+├── app.controller.ts
+├── app.module.ts
+├── app.service.ts
+└── main.ts
 ```
 
-## Compile and run the project
+## Requisitos Previos
 
-```bash
-# development
-$ npm run start
+- Node.js (v16 o superior)
+- npm o yarn
+- MySQL (v8 o superior)
 
-# watch mode
-$ npm run start:dev
+## Instalación
 
-# production mode
-$ npm run start:prod
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/tu-usuario/sistema-inventario-backend.git
+   cd sistema-inventario-backend
+
+
+
+```markdown project="Sistema de Gestión de Inventario" file="README.md"
+...
 ```
 
-## Run tests
+2. Instalar dependencias:
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```shellscript
+npm install
 ```
 
-## Deployment
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+3. Configurar variables de entorno:
+Crea un archivo `.env` en la raíz del proyecto con el siguiente contenido:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
+```plaintext
+DATABASE_URL="mysql://usuario:contraseña@localhost:3306/nombre_base_datos"
+PURCHASE_MANAGER_EMAIL="compras@empresa.com"
+APP_URL="http://localhost:3000"
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
 
-## Resources
+4. Generar el cliente Prisma:
 
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```shellscript
+npx prisma generate
+```
 
 
-### Módulo de Alertas
+5. Ejecutar migraciones:
 
-El módulo de alertas en tu aplicación NestJS está diseñado para monitorear y notificar sobre situaciones críticas relacionadas con el inventario de cajas. Vamos a analizar en detalle cómo funciona este módulo:
+```shellscript
+npx prisma migrate dev
+```
 
-## 1. Estructura y Propósito
 
-### Modelo de Datos
 
-El modelo `Alerta` (o `alerts` en la base de datos) tiene la siguiente estructura:
+
+## Variables de Entorno
+
+| Variable | Descripción | Valor por defecto
+|-----|-----|-----
+| `DATABASE_URL` | URL de conexión a la base de datos MySQL | -
+| `PURCHASE_MANAGER_EMAIL` | Correo electrónico del encargado de compras | [test@example.com](mailto:test@example.com)
+| `APP_URL` | URL base de la aplicación | [http://localhost:3000](http://localhost:3000)
+| `PORT` | Puerto en el que se ejecutará el servidor | 3000
+
+
+## Ejecución
+
+### Desarrollo
+
+```shellscript
+npm run start:dev
+```
+
+### Producción
+
+```shellscript
+npm run build
+npm run start:prod
+```
+
+## Endpoints API
+
+### Alertas
+
+| Método | Ruta | Descripción
+|-----|-----|-----
+| GET | `/alerts` | Obtener todas las alertas
+| GET | `/alerts/pendientes` | Obtener alertas pendientes
+| GET | `/alerts/by-status?estado=ESTADO` | Obtener alertas por estado
+| GET | `/alerts/:id` | Obtener una alerta específica
+| POST | `/alerts` | Crear una nueva alerta
+| PATCH | `/alerts/:id` | Actualizar una alerta
+| PATCH | `/alerts/:id/status` | Actualizar el estado de una alerta
+| DELETE | `/alerts/:id` | Eliminar una alerta
+| PATCH | `/alerts/:id/marcar-enviada` | Marcar una alerta como enviada
+| POST | `/alerts/:id/enviar-correo` | Enviar correo de una alerta
+| POST | `/alerts/enviar-correos-pendientes` | Enviar correos de alertas pendientes
+| GET | `/alerts/box/:id` | Obtener alertas de una caja específica
+
+
+### Cajas
+
+| Método | Ruta | Descripción
+|-----|-----|-----
+| GET | `/box` | Obtener todas las cajas
+| GET | `/box/:id` | Obtener una caja específica
+| POST | `/box` | Crear una nueva caja
+| PATCH | `/box/:id` | Actualizar una caja
+| DELETE | `/box/:id` | Eliminar una caja
+
+
+### Movimientos
+
+| Método | Ruta | Descripción
+|-----|-----|-----
+| GET | `/movements` | Obtener todos los movimientos
+| GET | `/movements/:id` | Obtener un movimiento específico
+| POST | `/movements` | Crear un nuevo movimiento
+| GET | `/movements/box/:id` | Obtener movimientos de una caja
+| GET | `/movements/user/:id` | Obtener movimientos de un usuario
+
+
+### Proveedores
+
+| Método | Ruta | Descripción
+|-----|-----|-----
+| GET | `/suppliers` | Obtener todos los proveedores
+| GET | `/suppliers/:id` | Obtener un proveedor específico
+| POST | `/suppliers` | Crear un nuevo proveedor
+| PATCH | `/suppliers/:id` | Actualizar un proveedor
+| DELETE | `/suppliers/:id` | Eliminar un proveedor
+
+
+### Usuarios
+
+| Método | Ruta | Descripción
+|-----|-----|-----
+| GET | `/users` | Obtener todos los usuarios
+| GET | `/users/:id` | Obtener un usuario específico
+| POST | `/users` | Crear un nuevo usuario
+| PATCH | `/users/:id` | Actualizar un usuario
+| DELETE | `/users/:id` | Eliminar un usuario
+
+
+### Dashboard
+
+| Método | Ruta | Descripción
+|-----|-----|-----
+| GET | `/dashboard/admin` | Obtener dashboard para administradores
+| GET | `/dashboard/user` | Obtener dashboard para usuarios
+
+
+### Correo
+
+| Método | Ruta | Descripción
+|-----|-----|-----
+| POST | `/mail/test` | Enviar correo de prueba
+
+
+## Modelos de Datos
+
+### Alertas (alerts)
+
+| Campo | Tipo | Descripción
+|-----|-----|-----
+| id | Int | Identificador único
+| caja_id | Int | ID de la caja relacionada
+| fecha | DateTime | Fecha de creación
+| mensaje | String | Mensaje de la alerta
+| send | Boolean | Indica si se ha enviado el correo
+| email_enviado | DateTime? | Fecha de envío del correo
+| estado | String | Estado (PENDIENTE, GESTIONADO, FINALIZADO)
+| fecha_gestion | DateTime? | Fecha de gestión
+| fecha_finalizacion | DateTime? | Fecha de finalización
+| notas | String? | Notas adicionales
+| gestionado_por | Int? | ID del usuario que gestionó la alerta
+
+
+### Cajas (box)
+
+| Campo | Tipo | Descripción
+|-----|-----|-----
+| id | Int | Identificador único
+| tipo | String | Tipo de caja
+| medidas | String | Dimensiones de la caja
+| stock | Int | Cantidad en stock
+| proveedor_id | Int | ID del proveedor
+| alerta_umbral | Int | Umbral para generar alertas
+
+
+### Movimientos (movements)
+
+| Campo | Tipo | Descripción
+|-----|-----|-----
+| id | Int | Identificador único
+| caja_id | Int | ID de la caja
+| cantidad | Int | Cantidad del movimiento
+| tipo_movimiento | Int | Tipo (1=ENTRADA, 2=SALIDA)
+| fecha | DateTime | Fecha del movimiento
+| usuario_id | Int | ID del usuario que realizó el movimiento
+
+
+### Proveedores (suppliers)
+
+| Campo | Tipo | Descripción
+|-----|-----|-----
+| id | Int | Identificador único
+| name | String | Nombre del proveedor
+| email | String | Correo electrónico
+| telefono | String | Número de teléfono
+
+
+### Usuarios (users)
+
+| Campo | Tipo | Descripción
+|-----|-----|-----
+| id | Int | Identificador único
+| name | String | Nombre del usuario
+| email | String | Correo electrónico
+| password | String | Contraseña (hash)
+| idRol | Int | Rol (1=ADMIN, 2=USER)
+
+
+## Funcionalidades Principales
+
+### Gestión de Stock
+
+El sistema permite realizar movimientos de entrada y salida de stock, actualizando automáticamente los niveles de inventario.
 
 ```typescript
-model Alerta {
-  id        Int      @id @default(autoincrement())
-  caja_id   Int
-  fecha     DateTime @db.Date
-  mensaje   String
-  send      Boolean
-  box       box      @relation(fields: [caja_id], references: [id])
+// Ejemplo de creación de un movimiento
+const movimiento = await prisma.movements.create({
+  data: {
+    caja_id: 1,
+    cantidad: 10,
+    tipo_movimiento: 1, // 1 = ENTRADA // 2 = SALIDA
+    fecha: new Date(),
+    usuario_id: 1,
+  },
+});
+```
+
+### Sistema de Alertas
+
+Cuando el stock de una caja cae por debajo del umbral definido, se genera automáticamente una alerta y se envía un correo electrónico al encargado de compras.
+
+```typescript
+// Verificar si el stock es bajo
+if (nuevoStock <= box.alerta_umbral) {
+  // Crear alerta y enviar correo
+  // ...
 }
 ```
 
-Donde:
+### Gestión de Alertas
 
-- `id`: Identificador único de la alerta
-- `caja_id`: ID de la caja relacionada con la alerta
-- `fecha`: Fecha en que se generó la alerta
-- `mensaje`: Descripción del problema o situación
-- `send`: Indicador de si la alerta ha sido enviada/procesada
-- `box`: Relación con la caja asociada
+Las alertas pasan por tres estados:
 
-
-### Propósito
-
-El módulo de alertas tiene como objetivo principal:
-
-1. Registrar situaciones de stock bajo o crítico
-2. Permitir el seguimiento de problemas de inventario
-3. Facilitar la gestión de notificaciones sobre estas situaciones
-
-
-## 2. Generación de Alertas
-
-Las alertas pueden generarse de dos maneras:
-
-### 2.1 Generación Automática
-
-Las alertas se generan automáticamente en dos situaciones:
-
-1. **Durante movimientos de salida**: Cuando se realiza un movimiento de salida que reduce el stock por debajo de un umbral (por ejemplo, 10 unidades), se genera una alerta automáticamente:
+1. **PENDIENTE**: Recién creada, sin gestionar
+2. **GESTIONADO**: En proceso de resolución
+3. **FINALIZADO**: Problema resuelto
 
 
 ```typescript
-// En MovimentsService (create method)
-if (nuevoStock < 10) {
-  await prisma.alerts.create({
-    data: {
-      caja_id: createMovementDto.caja_id,
-      fecha: new Date(),
-      mensaje: `Stock bajo para caja ${box.tipo}: ${nuevoStock} unidades restantes`,
-      send: false,
-    },
-  });
-}
+// Actualizar estado de alerta
+await prisma.alerts.update({
+  where: { id },
+  data: {
+    estado: AlertStatus.GESTIONADO,
+    fecha_gestion: new Date(),
+    gestionado_por: userId,
+  },
+});
 ```
 
-2. **Al verificar el stock**: Cuando se llama al endpoint de verificación de stock de una caja, también se puede generar una alerta si el stock está por debajo del umbral:
+### Notificaciones por Correo
+
+El sistema envía correos electrónicos automáticos cuando:
+
+- Se genera una alerta de stock bajo
+- Un administrador solicita el reenvío de una alerta
 
 
 ```typescript
-// En BoxService (verificarStock method)
-async verificarStock(id: number) {
-  const box = await this.findOne(id);
-  
-  if (box.stock < 10) {
-    await this.prisma.alerts.create({
-      data: {
-        caja_id: id,
-        fecha: new Date(),
-        mensaje: `Stock bajo para caja ${box.tipo}: ${box.stock} unidades restantes`,
-        send: false,
-      },
-    });
-  }
-  
-  return box;
-}
+// Enviar correo de alerta
+await mailService.sendStockAlert({
+  subject: `ALERTA: Stock bajo en ${box.tipo}`,
+  boxName: box.tipo,
+  medidas: box.medidas,
+  currentStock: nuevoStock,
+  threshold: box.alerta_umbral,
+  boxId: box.id,
+  supplierInfo: { /* ... */ },
+});
 ```
 
-### 2.2 Generación Manual
+### Dashboard
 
-También es posible crear alertas manualmente a través del endpoint `POST /alerts`:
+El sistema proporciona dashboards específicos para:
 
-```typescript
-// En AlertsService (create method)
-async create(createAlertDto: CreateAlertDto) {
-  // Verificar si la caja existe
-  const box = await this.prisma.box.findUnique({
-    where: { id: createAlertDto.caja_id },
-  });
+- **Administradores**: Vista completa con estadísticas, alertas pendientes y gestionadas
+- **Usuarios**: Vista simplificada con cajas de stock bajo y su estado de gestión
 
-  if (!box) {
-    throw new NotFoundException(`Caja con ID ${createAlertDto.caja_id} no encontrada`);
-  }
 
-  return this.prisma.alerts.create({
-    data: {
-      ...createAlertDto,
-      fecha: new Date(),
-      send: createAlertDto.send ?? false,
-    },
-  });
-}
+## Pruebas
+
+### Pruebas Unitarias
+
+```shellscript
+npm run test
 ```
 
-## 3. Gestión de Alertas
+### Pruebas e2e
 
-### 3.1 Consulta de Alertas
-
-El módulo ofrece varias formas de consultar las alertas:
-
-1. **Todas las alertas**: `GET /alerts`
-
-```typescript
-findAll() {
-  return this.prisma.alerts.findMany({
-    include: {
-      box: true,
-    },
-    orderBy: {
-      fecha: 'desc',
-    },
-  });
-}
+```shellscript
+npm run test:e2e
 ```
 
+### Cobertura de Pruebas
 
-2. **Alertas pendientes**: `GET /alerts/pendientes`
+```shellscript
+npm run test:cov
+```
 
-```typescript
-async findPendientes() {
-  return this.prisma.alerts.findMany({
-    where: { send: false },
-    include: {
-      box: true,
-    },
-    orderBy: {
-      fecha: 'desc',
-    },
-  });
-}
+## Pruebas con Postman
+
+Se incluye una colección de Postman para probar los endpoints de la API. Puedes importarla desde el archivo `Sistema_Inventario.postman_collection.json`.
+
+### Flujo de Trabajo Recomendado
+
+1. Probar la creación de proveedores
+2. Probar la creación de cajas
+3. Probar la creación de usuarios
+4. Probar movimientos de stock
+5. Verificar la generación automática de alertas
+6. Probar la gestión de alertas
+7. Verificar los dashboards
+
+
+## Despliegue
+
+### Preparación
+
+1. Compilar la aplicación:
+
+```shellscript
+npm run build
 ```
 
 
-3. **Alertas por caja**: `GET /alerts/box/:id`
+2. Configurar variables de entorno para producción
 
-```typescript
-async findByCaja(boxId: number) {
-  return this.prisma.alerts.findMany({
-    where: { caja_id: boxId },
-    orderBy: {
-      fecha: 'desc',
-    },
-  });
-}
+
+### Opciones de Despliegue
+
+#### Servidor Tradicional
+
+```shellscript
+npm run start:prod
+```
+
+#### Docker
+
+```shellscript
+docker build -t sistema-inventario-backend .
+docker run -p 3000:3000 sistema-inventario-backend
 ```
 
 
+## Mantenimiento
 
+### Migraciones de Base de Datos
 
-### 3.2 Procesamiento de Alertas
+Para crear una nueva migración después de cambiar el esquema:
 
-Una vez que una alerta ha sido atendida o procesada, se puede marcar como enviada:
-
-```typescript
-// En AlertsService (marcarComoEnviada method)
-async marcarComoEnviada(id: number) {
-  // Verificar si la alerta existe
-  await this.findOne(id);
-
-  return this.prisma.alerts.update({
-    where: { id },
-    data: { send: true },
-  });
-}
+```shellscript
+npx prisma migrate dev --name nombre_migracion
 ```
 
-Este endpoint (`PATCH /alerts/:id/marcar-enviada`) permite cambiar el estado de una alerta de pendiente a procesada.
+### Actualización de Dependencias
 
-## 4. Integración con el Flujo de Trabajo
+```shellscript
+npm update
+```
 
-El módulo de alertas está integrado con el flujo de trabajo de la aplicación de la siguiente manera:
+## Solución de Problemas
 
-1. **Movimientos de inventario**: Cuando se realizan movimientos que afectan al stock, se verifica si es necesario generar alertas.
-2. **Verificación periódica**: A través del endpoint `GET /box/:id/verificar-stock`, se puede implementar una verificación periódica del stock de las cajas.
-3. **Gestión de notificaciones**: Las alertas pendientes (`send = false`) pueden ser consultadas para enviar notificaciones a los usuarios responsables.
+### Problemas Comunes
 
+1. **Error de conexión a la base de datos**
 
-## 5. Posibles Extensiones
-
-El módulo de alertas podría extenderse para incluir:
-
-1. **Niveles de alerta**: Diferenciar entre alertas de bajo stock, stock crítico, etc.
-2. **Notificaciones automáticas**: Integrar con servicios de email o SMS para enviar notificaciones automáticas.
-3. **Asignación de responsables**: Asignar usuarios responsables de atender cada alerta.
-4. **Historial de acciones**: Registrar las acciones tomadas para resolver cada alerta.
+1. Verificar que la URL de conexión en `.env` sea correcta
+2. Comprobar que el servidor MySQL esté en ejecución
 
 
-## 6. Ejemplo de Flujo Completo
 
-Un flujo completo de uso del módulo de alertas podría ser:
+2. **Error al enviar correos**
 
-1. Se realiza un movimiento de salida que reduce el stock de una caja por debajo del umbral.
-2. Se genera automáticamente una alerta con `send = false`.
-3. Un administrador consulta las alertas pendientes a través de `GET /alerts/pendientes`.
-4. El administrador toma acciones para resolver el problema (por ejemplo, realizar un pedido al proveedor).
-5. Una vez resuelto, marca la alerta como enviada con `PATCH /alerts/:id/marcar-enviada`.
-6. La alerta aparecerá en el historial pero ya no en las pendientes.
+1. Verificar la configuración del servicio de correo
+2. Comprobar que el correo del encargado de compras esté configurado
+2. Comprobar que el app password este configurado.
 
 
-Este sistema permite mantener un control efectivo del inventario y asegurar que los problemas de stock bajo sean atendidos oportunamente.
+
+3. **Prisma Client no generado**
+
+1. Ejecutar `npx prisma generate`
+
+
+
+
+
+## Contribución
+
+1. Hacer fork del repositorio
+2. Crear una rama para tu funcionalidad (`git checkout -b feature/nueva-funcionalidad`)
+3. Hacer commit de tus cambios (`git commit -m 'Añadir nueva funcionalidad'`)
+4. Hacer push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Crear un Pull Request
+
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE para más detalles.
+
+## Contacto
+
+Para cualquier consulta o sugerencia, por favor contacta a:
+
+- Email: [nicolasorbe4@gmail.com](mailto:nicolasorbe4@gmail.com)
+- GitHub: [nicolasorbe1337](https://github.com/nicolasorbe1337)
+
+
+```plaintext
+
+```

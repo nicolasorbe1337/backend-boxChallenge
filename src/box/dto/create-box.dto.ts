@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { IsNotEmpty, IsNumber, IsPositive, IsString } from "class-validator"
+import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from "class-validator"
 
 export class CreateBoxDto {
   @IsNotEmpty()
@@ -19,4 +19,9 @@ export class CreateBoxDto {
   @IsNumber()
   @IsPositive()
   proveedor_id: number
+  
+  @IsOptional()
+  @IsNumber()
+  @IsPositive()
+  alerta_umbral?: number
 }
