@@ -46,8 +46,8 @@ src/
 
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/sistema-inventario-backend.git
-   cd sistema-inventario-backend
+   git clone https://github.com/nicolasorbe1337/backend-boxChallenge.git
+   cd backend-cajas
 
 
 
@@ -335,6 +335,63 @@ El sistema proporciona dashboards específicos para:
 
 - **Administradores**: Vista completa con estadísticas, alertas pendientes y gestionadas
 - **Usuarios**: Vista simplificada con cajas de stock bajo y su estado de gestión
+
+## Autenticación y Autorización con JWT
+
+El Sistema implementa autenticación y autorización mediante JSON Web Tokens (JWT), proporcionando un mecanismo seguro para proteger los endpoints de la API y controlar el acceso basado en roles.
+
+### Características principales
+
+- **Autenticación segura**: Sistema de login/registro con contraseñas cifradas mediante bcrypt
+- **Tokens JWT**: Generación de tokens firmados con expiración configurable
+- **Control de acceso por roles**: Diferenciación entre administradores (idRol=1) y usuarios regulares (idRol=2)
+- **Protección de rutas**: Middleware que verifica la autenticidad de los tokens en cada solicitud
+- **Gestión de sesiones sin estado**: No requiere almacenamiento de sesiones en el servidor
+
+
+### Flujo de autenticación
+
+1. El usuario se registra o inicia sesión con sus credenciales
+2. El servidor valida las credenciales y genera un token JWT
+3. El cliente almacena el token y lo incluye en el encabezado `Authorization` de cada solicitud
+4. El servidor verifica el token y permite o deniega el acceso según el rol del usuario
+
+
+### Endpoints de autenticación
+
+| Método | Ruta | Descripción | Acceso
+|-----|-----|-----|-----
+| POST | `/auth/register` | Registro de nuevos usuarios | Público
+| POST | `/auth/login` | Inicio de sesión | Público
+| GET | `/auth/profile` | Obtener perfil del usuario actual | Autenticado
+
+
+### Control de acceso
+
+- **Usuarios (idRol=2)**: Pueden registrar movimientos, consultar inventario y ver el dashboard básico
+- **Administradores (idRol=1)**: Acceso completo, incluyendo gestión de alertas, configuración del sistema y dashboard avanzado
+
+
+### Configuración
+
+El sistema utiliza dos variables de entorno principales:
+
+- `JWT_SECRET`: Clave secreta para firmar los tokens
+- `JWT_EXPIRATION`: Tiempo de validez de los tokens (por defecto: "1d")
+
+
+### Uso en clientes
+
+Para consumir los endpoints protegidos, los clientes deben:
+
+1. Obtener un token mediante login
+2. Incluir el token en todas las solicitudes:
+
+```plaintext
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+Esta implementación asegura que solo los usuarios autorizados puedan acceder a funcionalidades específicas del sistema, manteniendo la seguridad y la integridad de los datos.
 
 
 ## Pruebas

@@ -8,6 +8,7 @@ import { BoxModule } from "./box/box.module"
 import { MovementsModule } from "./movements/movements.module"
 import { AlertsModule } from "./alerts/alerts.module"
 import { MailModule } from "./mail/mail/mail.module"
+import { AuthModule } from "./auth/auth.module"
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { MailModule } from "./mail/mail/mail.module"
     BoxModule,
     MovementsModule,
     AlertsModule,
-    MailModule
+    MailModule,
+    AuthModule
   ],
 })
 export class AppModule {}

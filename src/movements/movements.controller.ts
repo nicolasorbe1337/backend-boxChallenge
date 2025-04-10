@@ -1,9 +1,11 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Param, ParseIntPipe } from "@nestjs/common"
+import { Controller, Get, Post, Body, Param, ParseIntPipe, UseGuards } from "@nestjs/common"
 import  { MovementsService } from "./movements.service"
 import  { CreateMovementDto } from "./dto/create-movement.dto"
+import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
 
 @Controller("movements")
+@UseGuards(JwtAuthGuard)
 export class MovementsController {
   constructor(private readonly movementsService: MovementsService) {}
 
