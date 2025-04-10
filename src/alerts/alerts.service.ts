@@ -1,53 +1,33 @@
-/* eslint-disable prettier/prettier */
 import { ForbiddenException, Injectable, Logger, NotFoundException } from "@nestjs/common"
-import  { PrismaService } from "../prisma/prisma.service"
-import { CreateAlertDto } from "./dto/create-alert.dto"
+import  { CreateAlertDto } from "./dto/create-alert.dto"
+import  { ConfigService } from "@nestjs/config"
 
-import { ConfigService } from "@nestjs/config"
+import { AlertStatus, type UpdateAlertStatusDto } from "./dto/update-status.dto"
+import  { UpdateAlertDto } from "./dto/update-alert.dto"
+
 import { MailService } from "src/mail/mail/mail.service"
-import { AlertStatus, UpdateAlertStatusDto } from "./dto/update-status.dto"
-import { UpdateAlertDto } from "./dto/update-alert.dto"
+import { AlertsRepository } from "./repository/alerts.repository"
+
 
 @Injectable()
 export class AlertsService {
   private readonly logger = new Logger(AlertsService.name)
 
   constructor(
-    private prisma: PrismaService,
+    private alertsRepository: AlertsRepository,
     private mailService: MailService,
     private configService: ConfigService,
-    
   ) {}
 
   async create(createAlertDto: CreateAlertDto) {
     // Verificar si la caja existe
-    const box = await this.prisma.box.findUnique({
-      where: { id: createAlertDto.caja_id },
-      include: {
-        supplier: true,
-      },
-    })
-
+    const box = await this.alertsRepository.findBoxById(createAlertDto.caja_id)
     if (!box) {
       throw new NotFoundException(`Caja con ID ${createAlertDto.caja_id} no encontrada`)
     }
 
     // Crear la alerta
-    const alerta = await this.prisma.alerts.create({
-      data: {
-        ...createAlertDto,
-        fecha: new Date(),
-        send: createAlertDto.send ?? false,
-        estado: AlertStatus.PENDIENTE,
-      },
-      include: {
-        box: {
-          include: {
-            supplier: true,
-          },
-        },
-      },
-    })
+    const alerta = await this.alertsRepository.createAlert(createAlertDto)
 
     // Intentar enviar el correo al encargado de compras interno
     try {
@@ -59,46 +39,18 @@ export class AlertsService {
     return alerta
   }
 
-  findAll() {
-    return this.prisma.alerts.findMany({
-      include: {
-        box: {
-          include: {
-            supplier: true,
-          },
-        },
-        gestor: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
-      },
-      orderBy: {
-        fecha: "desc",
-      },
-    })
+  async findAll() {
+    const alerts = await this.alertsRepository.findAllAlerts()
+
+    if (alerts.length === 0) {
+      throw new NotFoundException("No existen alertas")
+    }
+
+    return alerts
   }
 
   async findOne(id: number) {
-    const alert = await this.prisma.alerts.findUnique({
-      where: { id },
-      include: {
-        box: {
-          include: {
-            supplier: true,
-          },
-        },
-        gestor: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
-      },
-    })
+    const alert = await this.alertsRepository.findAlertById(id)
 
     if (!alert) {
       throw new NotFoundException(`Alerta con ID ${id} no encontrada`)
@@ -111,109 +63,59 @@ export class AlertsService {
     // Verificar si la alerta existe
     await this.findOne(id)
 
-    return this.prisma.alerts.update({
-      where: { id },
-      data: updateAlertDto,
-    })
+    return this.alertsRepository.updateAlert(id, updateAlertDto)
   }
 
   async remove(id: number) {
     // Verificar si la alerta existe
     await this.findOne(id)
 
-    return this.prisma.alerts.delete({
-      where: { id },
-    })
+    return this.alertsRepository.deleteAlert(id)
   }
 
   async marcarComoEnviada(id: number) {
     // Verificar si la alerta existe
     await this.findOne(id)
 
-    return this.prisma.alerts.update({
-      where: { id },
-      data: {
-        send: true,
-        email_enviado: new Date(),
-      },
-    })
+    return this.alertsRepository.markAlertAsSent(id)
   }
 
   async findByBox(boxId: number) {
-    return this.prisma.alerts.findMany({
-      where: { caja_id: boxId },
-      include: {
-        gestor: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
-      },
-      orderBy: {
-        fecha: "desc",
-      },
-    })
+    const alertas = await this.alertsRepository.findAlertsByBox(boxId)
+
+    if (alertas.length === 0) {
+      throw new NotFoundException(`No existen alertas para la caja con ID ${boxId}`)
+    }
+
+    return alertas
   }
 
   async findPendientes() {
-    return this.prisma.alerts.findMany({
-      where: {
-        send: false,
-        estado: AlertStatus.PENDIENTE,
-      },
-      include: {
-        box: {
-          include: {
-            supplier: true,
-          },
-        },
-      },
-      orderBy: {
-        fecha: "desc",
-      },
-    })
+    const pendingAlerts = await this.alertsRepository.findPendingAlerts()
+
+    if (pendingAlerts.length === 0) {
+      throw new NotFoundException("No existen alertas pendientes")
+    }
+
+    return pendingAlerts
   }
 
-  /**
-   * Obtiene todas las alertas por estado
-   */
   async findByStatus(estado: AlertStatus) {
-    return this.prisma.alerts.findMany({
-      where: { estado },
-      include: {
-        box: {
-          include: {
-            supplier: true,
-          },
-        },
-        gestor: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
-      },
-      orderBy: {
-        fecha: "desc",
-      },
-    })
+    const alertas = await this.alertsRepository.findAlertsByStatus(estado)
+
+    if (alertas.length === 0) {
+      throw new NotFoundException(`No existen alertas con estado ${estado}`)
+    }
+
+    return alertas
   }
 
-  /**
-   * Actualiza el estado de una alerta
-   */
   async updateStatus(id: number, updateStatusDto: UpdateAlertStatusDto) {
     // Verificar si la alerta existe
     const alerta = await this.findOne(id)
 
     // Verificar si el usuario existe
-    const usuario = await this.prisma.users.findUnique({
-      where: { id: updateStatusDto.gestionado_por },
-    })
-
+    const usuario = await this.alertsRepository.findUserById(updateStatusDto.gestionado_por)
     if (!usuario) {
       throw new NotFoundException(`Usuario con ID ${updateStatusDto.gestionado_por} no encontrado`)
     }
@@ -252,41 +154,12 @@ export class AlertsService {
     }
 
     // Actualizar la alerta
-    return this.prisma.alerts.update({
-      where: { id },
-      data: updateData,
-      include: {
-        box: true,
-        gestor: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
-      },
-    })
+    return this.alertsRepository.updateAlertStatus(id, updateData)
   }
 
-  /**
-   * Envía un correo electrónico para una alerta específica al encargado de compras interno
-   */
   async enviarCorreoAlerta(alertId: number) {
     // Obtener la alerta con todos los datos necesarios
-    const alerta = await this.prisma.alerts.findUnique({
-      where: { id: alertId },
-      include: {
-        box: {
-          include: {
-            supplier: true,
-          },
-        },
-      },
-    })
-
-    if (!alerta) {
-      throw new NotFoundException(`Alerta con ID ${alertId} no encontrada`)
-    }
+    const alerta = await this.findOne(alertId)
 
     // Si ya fue enviada, no enviar de nuevo
     if (alerta.send) {
@@ -318,13 +191,7 @@ export class AlertsService {
       })
 
       // Marcar como enviada
-      await this.prisma.alerts.update({
-        where: { id: alertId },
-        data: {
-          send: true,
-          email_enviado: new Date(),
-        },
-      })
+      await this.alertsRepository.markAlertAsSent(alertId)
 
       return { success: true, message: "Correo enviado correctamente al encargado de compras" }
     } catch (error) {
@@ -333,30 +200,35 @@ export class AlertsService {
     }
   }
 
-  /**
-   * Envía correos para todas las alertas pendientes
-   */
   async enviarCorreosPendientes() {
-    const alertasPendientes = await this.findPendientes()
-    const resultados = []
+    try {
+      const alertasPendientes = await this.findPendientes()
+      const resultados = []
 
-    for (const alerta of alertasPendientes) {
-      try {
-        const resultado = await this.enviarCorreoAlerta(alerta.id)
-        resultados.push({
-          alertaId: alerta.id,
-          success: true,
-          message: resultado.message,
-        })
-      } catch (error) {
-        resultados.push({
-          alertaId: alerta.id,
-          success: false,
-          message: error.message,
-        })
+      for (const alerta of alertasPendientes) {
+        try {
+          const resultado = await this.enviarCorreoAlerta(alerta.id)
+          resultados.push({
+            alertaId: alerta.id,
+            success: true,
+            message: resultado.message,
+          })
+        } catch (error) {
+          resultados.push({
+            alertaId: alerta.id,
+            success: false,
+            message: error.message,
+          })
+        }
       }
-    }
 
-    return resultados
+      return resultados
+    } catch (error) {
+      // Si findPendientes() lanza NotFoundException, capturamos y devolvemos un mensaje apropiado
+      if (error instanceof NotFoundException) {
+        return { message: error.message, alertasEnviadas: 0 }
+      }
+      throw error // Re-lanzar otros tipos de errores
+    }
   }
 }
